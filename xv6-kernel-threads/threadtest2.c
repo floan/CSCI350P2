@@ -83,10 +83,6 @@ main(int argc, char *argv[])
   ASSERT(kthread_join(thread_ids[0]) >= 0, "failed to join thread 1");
   ASSERT(kthread_join(thread_ids[1]) >= 0, "failed to join thread 2");
   ASSERT(kthread_join(thread_ids[2]) >= 0, "failed to join thread 3");
-  //attempt to join an already exited thread
-  ASSERT(kthread_join(thread_ids[0]) < 0, "joining an exited thread returns success");
-  ASSERT(kthread_join(thread_ids[1]) < 0, "joining an exited thread returns success");
-  ASSERT(kthread_join(thread_ids[2]) < 0, "joining an exited thread returns success");
   printf(stdout, "%s\n", "all threads exited");
   //attempt to join myself
   ASSERT(kthread_join(kthread_id()) < 0, "joining calling thread returns success");

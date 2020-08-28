@@ -601,22 +601,6 @@ procdump(void)
       }
     }
 
-    cprintf("Page mappings:\n");
-    pte_t *pte, *pgtab;
-    int vpn; // virtual page number
 
-    for(vpn = 0; vpn < NPDENTRIES*NPTENTRIES; vpn++)
-    {
-      void *va = (void *) (vpn << PTXSHIFT);
-      //                        must use it as virtual address.
-      pde_t *pde = &p->pgdir[PDX(va)];
-      if(*pde & PTE_P && *pde & PTE_U){
-          pgtab = (pte_t*)P2V(PTE_ADDR(*pde)); // the page table
-          pte = &pgtab[PTX(va)];               // the page table entry
-
-          if(*pte & PTE_P && *pte & PTE_U)
-            cprintf("%d -> %d, %s\n", vpn, *pte >> PTXSHIFT, ((*pte & PTE_W) || ((*pte & PTE_WS) && !getSharedCounter(*pte >> PTXSHIFT))) ? "y" : "n");
-      }
-    }
   }
 }
